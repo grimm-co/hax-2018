@@ -10,10 +10,10 @@ RUN useradd escalator -m -s /bin/bash && \
 
 # copy flags, change permissions
 COPY flag1.txt /home/escalator-1/flag.txt
-RUN chmod escalator-1 /home/escalator-1/flag.txt && chmod 400 /home/escalator-1/flag.txt
+RUN chown escalator-1 /home/escalator-1/flag.txt && chmod 400 /home/escalator-1/flag.txt
 
 COPY flag2.txt /home/escalator-2/flag.txt
-RUN chmod escalator-2 /home/escalator-2/flag.txt && chmod 400 /home/escalator-2/flag.txt
+RUN chown escalator-2 /home/escalator-2/flag.txt && chmod 400 /home/escalator-2/flag.txt
 
 # challenge one
 RUN echo 'escalator ALL=(escalator-1) NOPASSWD: /usr/bin/find' > /etc/sudoers.d/e1
