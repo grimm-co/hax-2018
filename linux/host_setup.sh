@@ -15,9 +15,20 @@ cp dockersh.ini /etc/dockersh.ini
 # create users for dockersh challenges
 for i in netcatter escalator trap attrboy
 do
-    useradd $i -s $(which dockersh) -G docker
+    useradd $i -s $(which bash) -G docker
     echo "$i:$i" | chpasswd
 done
+
+# force shell to dockersh for created users
+cat << EOF >> /etc/ssh/sshd_config
+Match User attrboy,escalator,netcatter,trap
+        X11Forwarding no
+        AllowTcpForwarding no
+        ForceCommand /usr/local/bin/dockersh
+EOF
+
+# stop users from switching user
+chmod go-x $(which su)
 
 # build netcatter
 cd ../netcatter
